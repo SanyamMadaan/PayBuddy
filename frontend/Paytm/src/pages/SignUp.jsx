@@ -35,7 +35,7 @@ export function SignUp() {
           navigate("/dashboard");
         } catch (e) {
           console.log("inside catch block");
-          alert(e.response.data.msg);
+          alert("Error while signing in..Please try after some time");
           console.log(e);
         }
       }

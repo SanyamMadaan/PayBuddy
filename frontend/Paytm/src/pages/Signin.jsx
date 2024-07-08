@@ -26,7 +26,7 @@ export function Signin(){
             navigate('/dashboard');
         }
         catch(e){
-            alert(e.response.data.msg);
+            alert("Error while signing in..Please try after some time");
         }
     }
 
