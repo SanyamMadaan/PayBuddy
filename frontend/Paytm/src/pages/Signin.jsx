@@ -10,11 +10,13 @@ import axios from "axios";
 export function Signin(){
     const[email,setEmail]=useState("");
     const[password,setPassword]=useState("");
+    const[button,setButton]=useState("Sign in");
     const navigate=useNavigate();
 
     async function handleClick(event){
         event.preventDefault();
         try{
+            setButton("Signing in....");
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/signin`,{
                 email,
                 password
@@ -25,6 +27,7 @@ export function Signin(){
             navigate('/dashboard');
         }
         catch(e){
+            setButton("Sign in");
             if(e.response.data.msg){
                 alert(e.response.data.msg);
             }
@@ -48,7 +51,7 @@ return(
         <Inputs onChange={(e)=>{
                 setPassword(e.target.value);
             }}placeholder={"password"} label={"Password"} type={"password"}/>
-        <Button redirect={"Sign in"}></Button>
+        <Button redirect={button}></Button>
         </form>
         <BottomWarning label={"Don't have an account ?"} to={"/signup"} buttontext={"Sign Up"}></BottomWarning>
     </div>

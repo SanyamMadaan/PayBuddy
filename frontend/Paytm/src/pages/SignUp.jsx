@@ -12,11 +12,13 @@ export function SignUp() {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const[button,setButton]=useState("Sign Up");
   const navigate = useNavigate();
 
   async function handleSubmit(event){
         event.preventDefault();
         try {
+          setButton("Creating account...");
           console.log("try block before request");
           const response = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/signup`,
@@ -38,6 +40,7 @@ export function SignUp() {
             alert(e.response.data.msg);
         }
         else{
+            setButton("Sign Up");
             alert("Error while signing in..Please try after some time");
         }
         
@@ -82,7 +85,7 @@ export function SignUp() {
             type={"password"}
           />
           <Button
-            redirect={"Sign Up"}
+            redirect={button}
           ></Button>
           </form>
         <BottomWarning
