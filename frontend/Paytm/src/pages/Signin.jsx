@@ -39,8 +39,8 @@ export function Signin(){
     }
 
 return(
-    <div className="bg-slate-300 h-screen flex justify-center items-center">
-    <div className="bg-white h-max w-2/4 p-3.5 rounded md:w-1/4 px-4">
+    <div className="bg-black h-screen flex justify-center items-center">
+    <div className="bg-white h-max lg:w-1/4 md:w-1/2 p-3.5 rounded  px-4 m-4">
         <Heading title={"Sign In"} />
         <SubTitle subtitle={"Enter your crudentials to access your account"}/>
 
