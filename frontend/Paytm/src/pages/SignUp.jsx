@@ -34,9 +34,13 @@ export function SignUp() {
           alert("Congratulations..Your account has been created successfully");
           navigate("/dashboard");
         } catch (e) {
-          console.log("inside catch block");
-          alert("Error while signing in..Please try after some time");
-          console.log(e);
+          if(e.response.data.msg){
+            alert(e.response.data.msg);
+        }
+        else{
+            alert("Error while signing in..Please try after some time");
+        }
+        
         }
       }
 

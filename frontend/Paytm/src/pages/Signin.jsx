@@ -22,11 +22,16 @@ export function Signin(){
             console.log(response);
             const token=response.data.token;
             localStorage.setItem("authorization","Bearer "+token);
-            alert('welcome back');
             navigate('/dashboard');
         }
         catch(e){
-            alert("Error while signing in..Please try after some time");
+            if(e.response.data.msg){
+                alert(e.response.data.msg);
+            }
+            else{
+                alert("Error while signing in..Please try after some time");
+            }
+            
         }
     }
 
