@@ -17,7 +17,7 @@ export function Dashboard() {
   async function fetchBalance() {
     try {
       const token = localStorage.getItem('authorization');
-      const response = await axios.get('http://localhost:3000/api/v1/account/balance', {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/account/balance`, {
         headers: {
           Authorization: token
         }

@@ -11,7 +11,7 @@ export function Userlist() {
     useEffect(() => {
         async function getUsers() {
             try {
-                const allusers = await axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${query}`);
+                const allusers = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/bulk?filter=${query}`);
                 setUsers(allusers.data.user);
                 console.log("user fetch success", allusers.data);
             } catch (e) {
