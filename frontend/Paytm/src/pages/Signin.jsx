@@ -17,6 +17,7 @@ export function Signin(){
         event.preventDefault();
         try{
             setButton("Signing in....");
+            console.log(import.meta.env.VITE_BACKEND_URL);
             const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/signin`,{
                 email,
                 password
