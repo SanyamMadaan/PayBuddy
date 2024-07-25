@@ -6,6 +6,16 @@ const {TOKEN} = require('../config');
 const authmiddleware=require('../middleware/authentication');
 const router=express.Router();
 
+
+//give username
+router.get('/findUserName',async(req,res)=>{
+    const UserId=req.query.userId;
+    const userDetails=await User.findOne({_id:UserId});
+    if(!userDetails){
+        return res.status(400).json({msg:"No user found with this email id"});
+    }
+    res.status(200).json({"Name":userDetails.firstname});
+})
 //create a new user
 router.post('/signup',async (req,res)=>{
     const email=req.body.email;
