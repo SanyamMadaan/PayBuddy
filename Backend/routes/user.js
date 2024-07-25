@@ -16,6 +16,7 @@ router.get('/findUserName',async(req,res)=>{
     }
     res.status(200).json({"Name":userDetails.firstname});
 })
+
 //create a new user
 router.post('/signup',async (req,res)=>{
     const email=req.body.email;
