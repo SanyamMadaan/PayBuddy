@@ -13,7 +13,7 @@ export  function Send() {
   const [btn,setBtn]=useState('Inititate Transfer');
   return (
     <div className="bg-slate-300 h-screen flex justify-center items-center">
-      <div className="bg-white md:h-2/4 h-2/3 w-2/3 md:w-1/3 m-5 p-5 rounded-lg">
+      <div className="bg-white md:h-2/4 h-2/4 w-2/3 md:w-1/3 m-5 p-5 rounded-lg">
         <Heading title="Send Money"></Heading>
         <Reciever_Info name={name}></Reciever_Info>
         <div className="border-none">
