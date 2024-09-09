@@ -18,11 +18,16 @@ session.startTransaction();
 const to=req.body.to;
 const amount=req.body.amount;
 
+if(amount<=0){
+    await session.abortTransaction();
+    return res.status(400).json({msg:"Invalid amount"});
+}
+
 const account=await Account.findOne({
     userId:req.userId
 }).session(session);
 
-if(!account || account.balance<amount){
+if(!account || account.balance<amount || amount<0){
     await session.abortTransaction();
     return res.status(400).json({msg:"Insufficient balance"})
 }
@@ -42,7 +47,7 @@ await Account.updateOne({userId:to},{$inc:{balance:amount}}).session(session);
 
 await session.commitTransaction();
 
-res.json({
+res.status(200).json({
     msg:"Transfer successful"
 })
 });

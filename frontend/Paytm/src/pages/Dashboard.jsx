@@ -12,7 +12,7 @@ export function Dashboard() {
 
   useEffect(() => {
     fetchBalance();
-  }, []); // Run only once on initial render
+  }, [balance]); // Run only once on initial render
 
   async function fetchBalance() {
     try {
@@ -22,7 +22,9 @@ export function Dashboard() {
           Authorization: token
         }
       });
-      setBalance(response.data.balance);
+      let bal = parseFloat(parseFloat(response.data.balance).toFixed(2));
+
+      setBalance(bal);
     } catch (error) {
       setError(error.response?.data?.msg || "An error occurred while fetching balance.");
     }

@@ -19,15 +19,15 @@ router.get('/findUserName',async(req,res)=>{
 
 //create a new user
 router.post('/signup',async (req,res)=>{
-    const email=req.body.email;
+    const email=req.body.email.toLowerCase();
     const firstname=req.body.firstname;
     const lastname=req.body.lastname;
     const password=req.body.password;
 
     try{
     const olduser=await User.findOne({
-        email
-    })
+         email: { $regex: new RegExp("^" + email, "i") } }//for prevent case sensitivity
+    )
 
     if(olduser){
         console.log("User already exixts");
@@ -63,12 +63,12 @@ catch(e){
 
 //signin user
 router.post('/signin',async (req,res)=>{
-    const email=req.body.email;
+    const email=req.body.email.toLowerCase();
     const password=req.body.password;
 
     try{
         const isuser=await User.findOne({
-        email,
+        email: { $regex: new RegExp("^" + email, "i") },//for prevent case sensitivity
         password
     })
     console.log(isuser);
@@ -108,18 +108,34 @@ const updateduser=await User.updateOne({
 
 //show user friends using filter
 router.get('/bulk',async(req,res)=>{
-    const filter=req.query.filter || "";
-    const users=await User.find({
-        $or:[{firstname:{
-            "$regex":filter
-        }
-    },{
-        lastname:{
-            "$regex":filter
-        }
+    const filter = req.query.filter || "";
+
+    // Split filter by spaces (to support full name search)
+    const filterParts = filter.split(" ");
+
+    let conditions = [];
+
+    // If there are multiple parts, assume the user is searching for a full name
+    if (filterParts.length > 1) {
+        conditions.push({
+            $and: [
+                { firstname: { "$regex": filterParts[0], "$options": "i" } }, // First part in firstname
+                { lastname: { "$regex": filterParts[1], "$options": "i" } }   // Second part in lastname
+            ]
+        });
     }
-    ]
-    })
+
+    // Also add the condition to check for partial matches on either firstname or lastname
+    conditions.push(
+        { firstname: { "$regex": filter, "$options": "i" } },
+        { lastname: { "$regex": filter, "$options": "i" } }
+    );
+
+    // Use $or to match either the full name condition or the individual name conditions
+    const users = await User.find({
+        $or: conditions
+    });
+
 
     res.status(200).json({
         user:users.map(user=>({
