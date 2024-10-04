@@ -36,6 +36,7 @@ export function SignUp() {
           alert("Congratulations..Your account has been created successfully");
           navigate("/dashboard");
         } catch (e) {
+          setButton("Sign Up");
           if(e.response.data.msg){
             alert(e.response.data.msg);
         }
